@@ -85,7 +85,15 @@ rule instead of by measurement:
 
 ## Install
 
-There are no prebuilt releases yet. Build and install from source.
+### Download
+
+1. Install the engine: `cargo install auto-compress-apfs` (the app looks for it at `~/.cargo/bin/auto-compress-apfs`).
+2. Download the `.dmg` for your Mac (Apple Silicon or Intel) from the
+   [latest release](https://github.com/lucasbrito-wdt/disk-steward/releases/latest) and drag the app to Applications.
+3. The app is not notarized. On first launch macOS blocks it: open **System Settings > Privacy & Security** and click
+   **Open Anyway**.
+
+### Build from source
 
 Requirements: macOS, Rust (stable), [Bun](https://bun.sh), the Tauri CLI and the engine.
 
