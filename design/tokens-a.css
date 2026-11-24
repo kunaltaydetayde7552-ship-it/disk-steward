@@ -1,0 +1,117 @@
+/* Disk Steward - direction A, "Prensa de vidro" (glass press). Tailwind CSS v4, CSS-first.
+   Import after `@import "tailwindcss";` in the app entry CSS. The font is self-hosted:
+     @import "@fontsource-variable/geologica";
+   Light theme is the default; [data-theme="dark"] overrides the same names, so every utility
+   (bg-aluminum, text-anodized, ...) follows the theme without a dark: prefix.
+   Origins of every hue: design/PLAN-a.md section 2. */
+
+@theme static {
+  /* ---- materials of the machine (light) ---- */
+  --color-aluminum: #E6E8EA;        /* the MacBook Pro silver aluminum in daylight: window ground */
+  --color-aluminum-deep: #D0D4D8;   /* the same aluminum in shadow: hairlines and empty tracks */
+  --color-frost: #F8F9FA;           /* frosted glass of the block: raised surfaces */
+  --color-anodized: #1F2327;        /* space black anodized aluminum: ink and the primary action */
+  --color-anodized-muted: #555B62;  /* the same finish worn: secondary text */
+
+  /* ---- state is light: the MagSafe connector LED and the window close button ---- */
+  --color-magsafe-green: #2FBF71;       /* MagSafe LED, battery full: compressed and verified (light only) */
+  --color-magsafe-green-deep: #13703F;  /* the green as text and icons */
+  --color-magsafe-amber: #F5A524;       /* MagSafe LED, charging: work in progress (light only) */
+  --color-magsafe-amber-deep: #7D5206;  /* the amber as text */
+  --color-signal-red: #E5484D;          /* the red traffic light of a macOS window: failure (light only) */
+  --color-signal-red-deep: #B3261E;     /* the red as text */
+  --color-quartz: #A9BDC9;              /* glass with the light off, cold like quartz: blocked */
+  --color-quartz-deep: #3D5664;         /* the quartz as text */
+
+  --font-sans: "Geologica Variable", "Geologica", ui-sans-serif, system-ui, sans-serif;
+  --font-log: ui-monospace, "SF Mono", Menlo, monospace; /* engine log lines only */
+
+  /* minor third (1.2) from 14 px: 12 (11.7 rounded) / 14 / 16.8 / 20.2 / 24.2 / 29 / 41.8 / 60.2 / 86.7 */
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.1rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.35rem;
+  --text-lead: 1.05rem;
+  --text-lead--line-height: 1.5rem;
+  --text-title: 1.26rem;
+  --text-title--line-height: 1.65rem;
+  --text-value: 1.512rem;
+  --text-value--line-height: 1.9rem;
+  --text-heading: 1.814rem;
+  --text-heading--line-height: 1.15;
+  --text-display: clamp(2rem, 1.2rem + 1.6vw, 2.613rem);
+  --text-display--line-height: 1.05;
+  --text-numeral: clamp(2.75rem, 1rem + 4vw, 3.763rem);
+  --text-numeral--line-height: 0.95;
+  --text-hero: clamp(3.25rem, 0.6rem + 5.6vw, 5.419rem);
+  --text-hero--line-height: 0.9;
+
+  --radius-key: 10px;
+  --radius-panel: 20px;
+
+  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 10px 24px -12px rgb(31 35 39 / 0.34);
+  --shadow-float: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 26px 56px -24px rgb(31 35 39 / 0.42);
+  --shadow-press: inset 0 1px 3px rgb(31 35 39 / 0.24);
+
+  /* a press platen: steady approach, a firm landing, no bounce */
+  --ease-platen: cubic-bezier(0.5, 0, 0.1, 1);
+}
+
+@layer base {
+  /* the light the hero object carries; registered so the color itself can transition */
+  @property --hl { syntax: "<color>"; inherits: true; initial-value: #2FBF71; }
+
+  :root {
+    /* glass and aluminum of the hero object (SVG reads these) */
+    --glass-top-a: rgb(255 255 255 / 0.9);
+    --glass-top-b: rgb(255 255 255 / 0.5);
+    --glass-left-a: rgb(255 255 255 / 0.62);
+    --glass-left-b: rgb(255 255 255 / 0.28);
+    --glass-right-a: rgb(214 222 228 / 0.55);
+    --glass-right-b: rgb(196 206 214 / 0.3);
+    --glass-edge: rgb(255 255 255 / 0.95);
+    --glass-contact: rgb(31 35 39 / 0.32);
+    --glass-back: rgb(31 35 39 / 0.12);
+    --core-unlit-top: #F3F5F6;
+    --core-unlit-left: #E2E7EA;
+    --core-unlit-right: #C9D1D7;
+    --floor-shadow: rgb(31 35 39 / 0.38);
+    --alu-a: #F7F8F9;
+    --alu-b: #DADEE2;
+    --alu-c: #EEF0F2;
+    --alu-left: #C4C9CE;
+    --alu-right: #A4AAB0;
+  }
+
+  [data-theme="dark"] {
+    --color-aluminum: #16191C;
+    --color-aluminum-deep: #2C3238;
+    --color-frost: #1F2429;
+    --color-anodized: #E9EBED;
+    --color-anodized-muted: #A1A8AF;
+    --color-magsafe-green-deep: #5BD996;
+    --color-magsafe-amber-deep: #F2B451;
+    --color-signal-red-deep: #FF8F8A;
+    --color-quartz-deep: #A9C3D2;
+    --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 10px 24px -12px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 26px 56px -24px rgb(0 0 0 / 0.7);
+    --glass-top-a: rgb(255 255 255 / 0.2);
+    --glass-top-b: rgb(255 255 255 / 0.08);
+    --glass-left-a: rgb(255 255 255 / 0.13);
+    --glass-left-b: rgb(255 255 255 / 0.05);
+    --glass-right-a: rgb(160 176 190 / 0.12);
+    --glass-right-b: rgb(160 176 190 / 0.04);
+    --glass-edge: rgb(255 255 255 / 0.5);
+    --glass-contact: rgb(0 0 0 / 0.6);
+    --glass-back: rgb(255 255 255 / 0.1);
+    --core-unlit-top: #3A4249;
+    --core-unlit-left: #2E353B;
+    --core-unlit-right: #252B30;
+    --floor-shadow: rgb(0 0 0 / 0.7);
+    --alu-a: #5B6168;
+    --alu-b: #3B4046;
+    --alu-c: #4D535A;
+    --alu-left: #353A40;
+    --alu-right: #2A2E33;
+  }
+}

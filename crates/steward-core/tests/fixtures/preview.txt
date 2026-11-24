@@ -1,0 +1,6 @@
+
+would compress: 4 files, 878.9 KiB (0 skipped)
+top roots by size:
+   878.9 KiB  /private/tmp/claude-501/steward-fx.wouj/data
+Add -v to list every file (and why one is skipped).
+Nothing changed. Run 'auto-compress-apfs compress --apply --config /private/tmp/claude-501/steward-fx.wouj/c.toml --no-progress' to compress these 4 files (878.9 KiB).

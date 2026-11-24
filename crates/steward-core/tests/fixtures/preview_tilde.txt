@@ -1,0 +1,6 @@
+
+would compress: 88 files, 4.9 MiB (0 skipped)
+top roots by size:
+     4.9 MiB  ~/.cargo/registry
+Add -v to list every file (and why one is skipped).
+Nothing changed. Run 'auto-compress-apfs compress --apply' to compress these 88 files (4.9 MiB).

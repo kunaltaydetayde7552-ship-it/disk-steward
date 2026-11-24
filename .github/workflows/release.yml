@@ -1,0 +1,63 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  # one draft for every target: when each build job created its own, parallel jobs raced and
+  # split the assets across two drafts
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      release_id: ${{ steps.create.outputs.release_id }}
+    steps:
+      - id: create
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id=$(gh api "repos/${{ github.repository }}/releases" -f tag_name="${{ github.ref_name }}" \
+            -f name="Disk Steward ${{ github.ref_name }}" -F draft=true --jq .id)
+          echo "release_id=$id" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: create-release
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - args: --target aarch64-apple-darwin --bundles app,dmg
+            rust_target: aarch64-apple-darwin
+          - args: --target x86_64-apple-darwin --bundles app,dmg
+            rust_target: x86_64-apple-darwin
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_target }}
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: ". -> target"
+          key: ${{ matrix.rust_target }}
+
+      # beforeBuildCommand in tauri.conf.json builds the UI; only the dependencies are needed here
+      - name: Install UI dependencies
+        run: bun install --frozen-lockfile
+        working-directory: ui
+
+      # unsigned build: no Apple certificate, no updater artifacts
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ needs.create-release.outputs.release_id }}
+          args: ${{ matrix.args }}

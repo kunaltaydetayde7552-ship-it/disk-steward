@@ -1,0 +1,10 @@
+/target
+.DS_Store
+node_modules
+/ui/dist
+/src-tauri/gen
+*.key
+
+# Design working files (large screenshots, arena state)
+/design/screenshots/
+/.design-arena/

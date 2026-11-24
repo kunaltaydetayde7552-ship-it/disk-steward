@@ -1,0 +1,12 @@
+{
+	"StandardOutPath" = "/Users/dev/Library/Logs/docker-gc.log";
+	"LimitLoadToSessionType" = "Aqua";
+	"StandardErrorPath" = "/Users/dev/Library/Logs/docker-gc.log";
+	"Label" = "com.lucasbrito.docker-gc";
+	"OnDemand" = true;
+	"LastExitStatus" = 0;
+	"Program" = "/Users/dev/dev/infra/scripts/docker-gc.sh";
+	"ProgramArguments" = (
+		"/Users/dev/dev/infra/scripts/docker-gc.sh";
+	);
+};

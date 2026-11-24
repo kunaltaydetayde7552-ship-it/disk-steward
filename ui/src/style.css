@@ -1,0 +1,224 @@
+/* Disk Steward, direction A "Prensa de vidro" (design/PLAN.md, design/tokens.css).
+   The @theme block mirrors design/tokens.css. Hand-written CSS below is limited to what utilities cannot
+   express: the light pool that mixes a runtime color (--hl), the material of the tray panel, keyframes and
+   the reduced-motion overrides. All of it reads tokens. */
+@import "tailwindcss";
+@import "@fontsource-variable/geologica";
+
+@theme static {
+  /* materials of the machine (origins in design/PLAN.md section 2) */
+  --color-aluminum: #E6E8EA;
+  --color-aluminum-deep: #D0D4D8;
+  --color-frost: #F8F9FA;
+  --color-anodized: #1F2327;
+  --color-anodized-muted: #555B62;
+
+  /* state is light: the MagSafe connector LED and the window close button */
+  --color-magsafe-green: #2FBF71;
+  --color-magsafe-green-deep: #13703F;
+  --color-magsafe-amber: #F5A524;
+  --color-magsafe-amber-deep: #7D5206;
+  --color-signal-red: #E5484D;
+  --color-signal-red-deep: #B3261E;
+  --color-quartz: #A9BDC9;
+  --color-quartz-deep: #3D5664;
+
+  --font-sans: "Geologica Variable", "Geologica", ui-sans-serif, system-ui, sans-serif;
+  --font-log: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* minor third (1.2) from 14 px; display sizes are fluid between the 960 and 1180 windows */
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.1rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.35rem;
+  --text-lead: 1.05rem;
+  --text-lead--line-height: 1.5rem;
+  --text-title: 1.26rem;
+  --text-title--line-height: 1.65rem;
+  --text-value: 1.512rem;
+  --text-value--line-height: 1.9rem;
+  --text-heading: 1.814rem;
+  --text-heading--line-height: 1.15;
+  --text-display: clamp(2rem, 1.2rem + 1.6vw, 2.613rem);
+  --text-display--line-height: 1.05;
+  --text-numeral: clamp(2.75rem, 1rem + 4vw, 3.763rem);
+  --text-numeral--line-height: 0.95;
+  --text-hero: clamp(3.25rem, 0.6rem + 5.6vw, 5.419rem);
+  --text-hero--line-height: 0.9;
+
+  --radius-key: 10px;
+  --radius-panel: 20px;
+
+  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 10px 24px -12px rgb(31 35 39 / 0.34);
+  --shadow-float: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 26px 56px -24px rgb(31 35 39 / 0.42);
+  --shadow-press: inset 0 1px 3px rgb(31 35 39 / 0.24);
+
+  /* a press platen: steady approach, a firm landing, no bounce */
+  --ease-platen: cubic-bezier(0.5, 0, 0.1, 1);
+}
+
+@layer base {
+  /* the light the hero object carries; registered so the color and the pool position can transition */
+  @property --hl { syntax: "<color>"; inherits: true; initial-value: #2FBF71; }
+  @property --ax { syntax: "<length>"; inherits: true; initial-value: 320px; }
+  @property --ay { syntax: "<length>"; inherits: true; initial-value: 320px; }
+
+  :root {
+    /* glass of the hero object (the SVG reads these) */
+    --glass-top-a: rgb(255 255 255 / 0.9);
+    --glass-top-b: rgb(255 255 255 / 0.5);
+    --glass-left-a: rgb(255 255 255 / 0.62);
+    --glass-left-b: rgb(255 255 255 / 0.28);
+    --glass-right-a: rgb(214 222 228 / 0.55);
+    --glass-right-b: rgb(196 206 214 / 0.3);
+    --glass-edge: rgb(255 255 255 / 0.95);
+    --glass-contact: rgb(31 35 39 / 0.32);
+    --glass-back: rgb(31 35 39 / 0.12);
+    /* fresnel: glass reflects more at grazing angles, so every face brightens toward its edges */
+    --glass-fresnel: rgb(255 255 255 / 0.7);
+    /* the iron-oxide tint thick glass shows in its foot and its edges */
+    --glass-body: #CFE3E0;
+    --glass-bevel-shade: rgb(31 35 39 / 0.14);
+    --core-unlit-top: #F3F5F6;
+    --core-unlit-left: #E2E7EA;
+    --core-unlit-right: #C9D1D7;
+    --floor-shadow: rgb(31 35 39 / 0.38);
+    /* the platen: bead-blasted aluminum, plus the polished guide posts */
+    --alu-a: #F7F8F9;
+    --alu-b: #DADEE2;
+    --alu-c: #EEF0F2;
+    --alu-left: #C4C9CE;
+    --alu-right: #A4AAB0;
+    --chrome-dark: #6F777E;
+    --chrome-mid: #B9C0C6;
+    --chrome-light: #FBFCFD;
+    /* the desk the tray panel floats over in a plain browser */
+    --desk-a: #CDD3D8;
+    --desk-b: #B9C1C8;
+  }
+
+  [data-theme="dark"] {
+    --color-aluminum: #16191C;
+    --color-aluminum-deep: #2C3238;
+    --color-frost: #1F2429;
+    --color-anodized: #E9EBED;
+    --color-anodized-muted: #A1A8AF;
+    --color-magsafe-green-deep: #5BD996;
+    --color-magsafe-amber-deep: #F2B451;
+    --color-signal-red-deep: #FF8F8A;
+    --color-quartz-deep: #A9C3D2;
+    --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 10px 24px -12px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 26px 56px -24px rgb(0 0 0 / 0.7);
+    --shadow-press: inset 0 1px 3px rgb(0 0 0 / 0.5);
+    --glass-top-a: rgb(255 255 255 / 0.2);
+    --glass-top-b: rgb(255 255 255 / 0.08);
+    --glass-left-a: rgb(255 255 255 / 0.13);
+    --glass-left-b: rgb(255 255 255 / 0.05);
+    --glass-right-a: rgb(160 176 190 / 0.12);
+    --glass-right-b: rgb(160 176 190 / 0.04);
+    --glass-edge: rgb(255 255 255 / 0.5);
+    --glass-contact: rgb(0 0 0 / 0.6);
+    --glass-back: rgb(255 255 255 / 0.1);
+    --glass-fresnel: rgb(255 255 255 / 0.3);
+    --glass-body: #3E5A57;
+    --glass-bevel-shade: rgb(0 0 0 / 0.35);
+    --core-unlit-top: #3A4249;
+    --core-unlit-left: #2E353B;
+    --core-unlit-right: #252B30;
+    --floor-shadow: rgb(0 0 0 / 0.7);
+    --alu-a: #5B6168;
+    --alu-b: #3B4046;
+    --alu-c: #4D535A;
+    --alu-left: #353A40;
+    --alu-right: #2A2E33;
+    --chrome-dark: #202428;
+    --chrome-mid: #4A5157;
+    --chrome-light: #9AA2A9;
+    --desk-a: #0E1113;
+    --desk-b: #1A1E22;
+  }
+
+  html, body, #app { height: 100%; }
+  html { background: transparent; color-scheme: light; }
+  html[data-theme="dark"] { color-scheme: dark; }
+  /* outside Tauri there is no native vibrancy behind the translucent sidebar */
+  html[data-shell="web"] { background: var(--color-aluminum); }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-variant-numeric: lining-nums;
+    -webkit-font-smoothing: antialiased;
+    color: var(--color-anodized);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    overflow: hidden;
+    user-select: none;
+  }
+  code, .font-log { user-select: text; }
+  button, a, [role="switch"] { cursor: pointer; }
+  button:disabled, [aria-disabled="true"] { cursor: not-allowed; }
+}
+
+@layer components {
+  /* the window floor is tinted by the object's light, centered on the object */
+  .ambient {
+    background: radial-gradient(560px 480px at var(--ax) var(--ay), color-mix(in oklab, var(--hl) 20%, transparent), transparent 70%);
+    transition: --ax 750ms var(--ease-platen), --ay 750ms var(--ease-platen), --hl 600ms var(--ease-platen);
+  }
+  .hero-light { transition: --hl 600ms var(--ease-platen); }
+  /* the selected target row is lit by its own cube */
+  .flood { background: linear-gradient(90deg, color-mix(in oklab, var(--hl) 26%, var(--color-frost)) 0%, var(--color-frost) 55%); }
+  /* bytes the engine saved outside the current targets: hatched like the shared slab of the block */
+  .hatch {
+    background: repeating-linear-gradient(135deg, color-mix(in oklab, var(--color-quartz) 70%, transparent) 0 2px, transparent 2px 5px);
+  }
+
+  /* the tray panel: frosted glass over the desk, lit from below by the block it holds */
+  .tray-material {
+    background:
+      radial-gradient(120% 70% at 22% 18%, color-mix(in oklab, var(--hl) 16%, transparent), transparent 62%),
+      linear-gradient(180deg, color-mix(in oklab, var(--color-frost) 96%, transparent) 0%, color-mix(in oklab, var(--color-frost) 84%, transparent) 46%, color-mix(in oklab, var(--color-aluminum) 88%, transparent) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.75),
+      inset 0 0 0 1px color-mix(in oklab, var(--color-aluminum-deep) 80%, transparent),
+      inset 0 -24px 40px -28px color-mix(in oklab, var(--hl) 40%, transparent);
+    transition: --hl 600ms var(--ease-platen);
+  }
+  [data-theme="dark"] .tray-material { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), inset 0 0 0 1px var(--color-aluminum-deep), inset 0 -24px 40px -28px color-mix(in oklab, var(--hl) 40%, transparent); }
+  .desk-surface { background: radial-gradient(120% 90% at 30% 20%, var(--desk-a), var(--desk-b)); }
+
+  .scan { animation: scan 2.4s var(--ease-platen) infinite alternate; }
+  .pulse { animation: pulse 1.6s ease-in-out infinite; }
+  .spin { animation: spin 0.9s linear infinite; }
+  .skel {
+    background: linear-gradient(90deg, var(--color-aluminum-deep) 0 40%, var(--color-frost) 50%, var(--color-aluminum-deep) 60% 100%);
+    background-size: 300% 100%;
+    animation: shimmer 1.4s linear infinite;
+    border-radius: 6px;
+    color: transparent;
+  }
+  /* dialog and toast enter with the platen ease; CSS so it also runs where WAAPI is throttled */
+  dialog[open], .enter { animation: enter 350ms var(--ease-platen) both; }
+  dialog::backdrop { animation: fade 250ms var(--ease-platen) both; }
+  .nudge { animation: nudge 420ms var(--ease-platen); }
+  /* a screen arrives by fading only: the hero measures its slot while it enters, so nothing may move */
+  .screen-in { animation: fade 280ms var(--ease-platen) both; }
+
+  @keyframes scan { from { transform: translateY(0); } to { transform: translateY(var(--scan-to)); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+  @keyframes enter { from { opacity: 0; transform: translateY(10px) scale(0.98); } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes nudge { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.015); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan, .pulse, .spin, .skel, dialog[open], dialog::backdrop, .enter, .nudge, .screen-in { animation: none; }
+  .ambient, .hero-light, .tray-material { transition: none; }
+  /* controls keep their color feedback but stop scaling and sliding */
+  *, ::before, ::after {
+    scale: none !important;
+    transition-property: color, background-color, border-color, box-shadow, opacity, outline-color !important;
+  }
+}

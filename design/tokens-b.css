@@ -1,0 +1,77 @@
+/*
+  Disk Steward, direction B: "Proveta" (graduated cylinder on a light pad).
+  Tailwind v4 CSS-first tokens. Import after `@import "tailwindcss";`.
+  Dark only: direction A owns the light surface.
+  Every color has a declared origin in design/PLAN-b.md, section 2.
+*/
+
+@theme {
+  /* Ground: amber reagent-bottle glass, seen against a dark bench. */
+  --color-ground: #2B1F17;
+  --color-ground-deep: #1C140F;
+  --color-raised: #3A2B20;
+  --color-raised-hi: #433226;
+  --color-line: #574233;
+
+  /* Enamel: the white fired-on graduations of a lab cylinder. Text. */
+  --color-enamel: #F2EBE3;
+  --color-enamel-muted: #C4B3A3;
+  --color-enamel-faint: #A8927F;
+
+  /* Borosilicate: the cool edge-glow of lab glass on a light pad. Health, gain, focus, selection. */
+  --color-boro: #8FDCCF;
+  /* Sodium: the low-pressure sodium lamp of a lab hallway. Blocked and pending, calm, never alarm. */
+  --color-sodium: #F0B04A;
+  /* Copper: freshly cut copper wire on the bench, salmon-orange under the pad. Error only. */
+  --color-copper: #FF8A70;
+
+  --font-sans: "Sofia Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Ratio ~1.25 for text; numerals jump to display sizes. */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.35;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5;
+  --text-lead: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+  --text-lead--line-height: 1.45;
+  --text-title: clamp(1.375rem, 1.1rem + 0.7vw, 1.75rem);
+  --text-title--line-height: 1.15;
+  --text-numeral-md: clamp(1.75rem, 1.3rem + 1.2vw, 2.25rem);
+  --text-numeral-md--line-height: 1;
+  --text-numeral-lg: clamp(3.25rem, 2rem + 3.4vw, 5.25rem);
+  --text-numeral-lg--line-height: 0.92;
+  --text-numeral-xl: clamp(4rem, 1rem + 8vw, 8.5rem);
+  --text-numeral-xl--line-height: 0.9;
+
+  --radius-control: 10px;
+  --radius-pill: 12px;
+  --radius-window: 12px;
+  --radius-dock: 20px;
+
+  --shadow-raised: inset 0 1px 0 rgb(255 240 225 / 0.07), 0 1px 2px rgb(12 7 4 / 0.5), 0 8px 20px -8px rgb(12 7 4 / 0.65);
+  --shadow-pressed: inset 0 1px 3px rgb(12 7 4 / 0.6);
+  --shadow-dock: inset 0 1px 0 rgb(255 240 225 / 0.08), 0 18px 40px -12px rgb(12 7 4 / 0.8), 0 2px 6px rgb(12 7 4 / 0.45);
+  --shadow-window: 0 0 0 1px rgb(255 240 225 / 0.08), 0 40px 90px -20px rgb(6 4 2 / 0.85);
+
+  /* Signature easing: grains fall fast, then compact over a long tail. No overshoot. */
+  --ease-settle: cubic-bezier(0.22, 0.9, 0.24, 1);
+  --duration-settle: 900ms;
+  --duration-quick: 160ms;
+}
+
+/* The state light. Registered so the ambient tint and the pad glow can transition. */
+@property --light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8FDCCF;
+}
+
+/* Horizontal anchor of the ambient light; follows the hero between screens. */
+@property --hx {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 70%;
+}

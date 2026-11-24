@@ -1,0 +1,24 @@
+[package]
+name = "steward-core"
+version = "0.1.0"
+edition = "2024"
+description = "Core of Disk Steward: APFS compression control panel for dev machines"
+license = "GPL-3.0-only"
+
+[lib]
+name = "steward_core"
+path = "src/lib.rs"
+
+[[bin]]
+name = "steward"
+path = "src/bin/steward.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml_edit = "0.25"
+libc = "0.2"
+globset = { version = "0.4", default-features = false }
+
+[dev-dependencies]
+tempfile = "3"

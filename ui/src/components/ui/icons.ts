@@ -1,0 +1,26 @@
+// Glyphs on a 24 grid, 1.5 stroke: rounded joins like the macOS SF line weight at small sizes.
+export const ICONS = {
+  overview: '<path d="M12 3.2 20 7.6v8.8L12 20.8 4 16.4V7.6z"/><path d="M4 7.6 12 12l8-4.4M12 12v8.8"/>',
+  targets: '<path d="M3.5 7.5a2 2 0 0 1 2-2h3.8l2 2h7.2a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M3.5 10.5h17"/>',
+  runs: '<path d="M4.5 4h15M8 4v2.5M16 4v2.5M6 6.5h12v3H6z"/><path d="M7 13.5h10V20H7z"/><path d="M12 9.5v2"/>',
+  schedule: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  disk: '<rect x="3.5" y="6" width="17" height="12" rx="2.5"/><path d="M7 14.5h5M16.5 14.5h.01"/>',
+  compress: '<path d="M12 3v6M9 6.5 12 9l3-2.5M12 21v-6M9 17.5 12 15l3 2.5M4 12h16"/>',
+  docker: '<rect x="3.5" y="11" width="17" height="7.5" rx="2"/><path d="M6.5 11V8h3.5v3M10 11V5.5h4V11M14 11V8h3.5v3"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
+  check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  alert: '<path d="M12 8.5v4.5M12 16.2v.3"/><path d="M10.3 3.9 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
+  refresh: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v4h-4"/>',
+  folder: '<path d="M3.5 7.5a2 2 0 0 1 2-2h3.8l2 2h7.2a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',
+  file: '<path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4"/>',
+  log: '<rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="m7.5 10 2.5 2-2.5 2M12.5 14.5h4"/>',
+  finder: '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 4c-1.5 3-1.5 9 0 16M8.5 9v1.5M15.5 9v1.5M8 14.8c2.4 1.6 5.6 1.6 8 0"/>',
+  copy: '<rect x="8" y="8" width="11.5" height="11.5" rx="2"/><path d="M15.5 8V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2"/>',
+  stop: '<rect x="7" y="7" width="10" height="10" rx="2"/>',
+  install: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/>',
+  eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>',
+  close: '<path d="M6 6l12 12M18 6 6 18"/>',
+  power: '<path d="M12 3.5v8"/><path d="M7.2 6.2a7.5 7.5 0 1 0 9.6 0"/>',
+  open: '<rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M3.5 9h17"/>',
+} as const;
+export type IconName = keyof typeof ICONS;

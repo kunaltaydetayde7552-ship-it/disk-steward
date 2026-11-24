@@ -1,0 +1,2 @@
+would compress: 0 files, 0 B (0 skipped)
+Nothing changed. Run 'auto-compress-apfs compress --apply' to compress these 0 files (0 B).

@@ -1,0 +1,44 @@
+name: Target request
+description: Ask to support a new cache or folder
+labels: [target]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Targets are added only after their risk is understood: compressing a folder whose blocks are shared with APFS
+        clones, or that is rewritten often, can cost space instead of saving it. The answers below decide the rule.
+  - type: input
+    id: path
+    attributes:
+      label: Path
+      placeholder: "~/.cache/example"
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: Tool that owns it
+      placeholder: "example 1.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How the tool installs files there
+      description: Pick the closest. If you are unsure, say so below.
+      options: [clonefile (APFS clone), hardlink, symlink, plain copy, Not sure]
+    validations:
+      required: true
+  - type: textarea
+    id: measure
+    attributes:
+      label: Output of `steward measure <path> --json`
+      description: Run `cargo run -p steward-core --bin steward -- measure <path> --json`. Redact paths.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Is it rewritten often? Do projects or environments share files with it? Anything that reads it in a special way?

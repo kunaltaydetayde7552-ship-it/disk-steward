@@ -1,0 +1,64 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the [FAQ](https://github.com/lucasbrito-wdt/disk-steward#faq) first and make sure you run the latest version.
+        Redact home paths and anything private before pasting output.
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "macOS 15.1"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Disk Steward version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: engine
+    attributes:
+      label: Engine version
+      description: Output of `auto-compress-apfs --version`.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: targets
+    attributes:
+      label: Output of `steward targets --json`
+      description: Run `cargo run -p steward-core --bin steward -- targets --json`. Redact paths.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Optional. Remove anything private.
