@@ -19,8 +19,8 @@ use std::{
     },
     path::{Path, PathBuf},
     sync::{
-        atomic::{AtomicUsize, Ordering},
         Mutex,
+        atomic::{AtomicUsize, Ordering},
     },
     thread,
     time::Duration,
@@ -29,7 +29,7 @@ use std::{
 const WORKERS: usize = 4;
 
 pub(crate) const UF_COMPRESSED: u32 = 0x20; // sys/stat.h
-                                            // Header values (sys/attr.h): ATTR_CMNEXT_PRIVATESIZE 0x8 (in `forkattr`), FSOPT_ATTR_CMN_EXTENDED 0x20.
+// Header values (sys/attr.h): ATTR_CMNEXT_PRIVATESIZE 0x8 (in `forkattr`), FSOPT_ATTR_CMN_EXTENDED 0x20.
 const OPTIONS: u32 = libc::FSOPT_NOFOLLOW | libc::FSOPT_ATTR_CMN_EXTENDED;
 
 /// Walks `root` with a small worker pool (symlinks are not followed, other filesystems are not entered).

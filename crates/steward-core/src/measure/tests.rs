@@ -4,8 +4,8 @@ use std::{
     os::{macos::fs::MetadataExt as _, unix::fs::MetadataExt},
     process::Command,
     sync::{
-        atomic::{AtomicUsize, Ordering},
         Mutex,
+        atomic::{AtomicUsize, Ordering},
     },
     thread,
     time::{Duration, Instant},
